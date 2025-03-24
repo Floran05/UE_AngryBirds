@@ -1,0 +1,22 @@
+{
+	"FileVersion": 3,
+	"EngineAssociation": "{25C1EB5D-44AC-A676-3E0F-C2B4F444A510}",
+	"Category": "",
+	"Description": "",
+	"Modules": [
+		{
+			"Name": "UE_AngryBirds",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		}
+	],
+	"Plugins": [
+		{
+			"Name": "ModelingToolsEditorMode",
+			"Enabled": true,
+			"TargetAllowList": [
+				"Editor"
+			]
+		}
+	]
+}
