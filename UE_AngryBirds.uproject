@@ -20,6 +20,11 @@
 			"TargetAllowList": [
 				"Editor"
 			]
+		},
+
+		{
+			"Name": "Niagara",
+			"Enabled": true
 		}
 	]
 }

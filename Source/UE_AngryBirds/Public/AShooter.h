@@ -10,6 +10,8 @@ class USceneComponent;
 class USpringArmComponent;
 class UCameraComponent;
 class UStaticMeshComponent;
+class USplineComponent;
+class UNiagaraComponent;
 
 UCLASS()
 class UE_ANGRYBIRDS_API AAShooter : public APawn
@@ -24,7 +26,11 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+	virtual void ShowProjectilePath();
+	virtual void SetProjectileVelocity();
 
+	//		COMPONENTS
+	// =======================
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
 	USceneComponent* Root;
 
@@ -36,6 +42,18 @@ protected:
 
 	UPROPERTY(EditAnywhere)
 	UStaticMeshComponent* Projectile;
+
+	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
+	USplineComponent* ProjectilePath;
+
+	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
+	UNiagaraComponent* PathVisual;
+	// =======================
+
+	UPROPERTY()
+	float LaunchVelocity;
+	UPROPERTY()
+	float ProjectileRadius;
 
 public:
 	// Called every frame
