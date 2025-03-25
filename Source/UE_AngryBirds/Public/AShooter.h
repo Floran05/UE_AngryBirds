@@ -29,6 +29,8 @@ protected:
 	virtual void ShowProjectilePath();
 	virtual void SetProjectileVelocity();
 
+	//		COMPONENTS
+	// =======================
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
 	USceneComponent* Root;
 
@@ -46,6 +48,12 @@ protected:
 
 	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
 	UNiagaraComponent* PathVisual;
+	// =======================
+
+	UPROPERTY()
+	float LaunchVelocity;
+	UPROPERTY()
+	float ProjectileRadius;
 
 public:
 	// Called every frame
