@@ -4,16 +4,15 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "Physics/Experimental/ChaosEventType.h"
-#include "ChaosBuilding.generated.h"
+#include "Projectile.generated.h"
 
 UCLASS()
-class UE_ANGRYBIRDS_API AChaosBuilding : public AActor
+class UE_ANGRYBIRDS_API AProjectile : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
-	AChaosBuilding();
+	AProjectile();
 
 protected:
 	virtual void BeginPlay() override;
@@ -23,15 +22,18 @@ protected:
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
 	class USceneComponent* SceneRoot;
 
+	UPROPERTY(EditAnywhere)
+	class UStaticMeshComponent* Mesh;
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<class AFieldSystemActor> FieldSystemClass;
+
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	class UGeometryCollectionComponent* GeometryCollection;
+	FVector Impulse;
 
 protected:
 
 	UFUNCTION()
-	void OnChaosBreakEvent(const FChaosBreakEvent& BreakEvent);
-
-	UFUNCTION()
-	void OnChaosCrumblingEvent(const FChaosCrumblingEvent& CrumbleEvent);
+	void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
 
 };
