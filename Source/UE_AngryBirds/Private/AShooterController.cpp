@@ -30,6 +30,7 @@ void AAShooterController::SetupInputComponent()
 	if (UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(InputComponent))
 	{
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AAShooterController::Look);
+		EnhancedInputComponent->BindAction(ShootAction, ETriggerEvent::Triggered, this, &AAShooterController::Shoot);
 	}
 }
 
@@ -37,8 +38,6 @@ void AAShooterController::Look(const FInputActionInstance& Instance)
 {
 	FVector2D vector = Instance.GetValue().Get<FVector2D>();
 
-	//GetCharacter()->AddControllerPitchInput(vector.X);
-	//GetCharacter()->AddControllerYawInput(vector.Y);
 	if (AAShooter* shooter = Cast<AAShooter>(GetPawn()))
 	{
 		shooter->GetProjectile()->AddWorldRotation(FRotator(vector.Y, vector.X, 0.0f));
@@ -46,4 +45,14 @@ void AAShooterController::Look(const FInputActionInstance& Instance)
 
 	/*GetPawn()->AddControllerYawInput(vector.X);
 	GetPawn()->AddControllerPitchInput(vector.Y);*/
+}
+
+void AAShooterController::Shoot(const FInputActionInstance& Instance)
+{
+	bool boolean = Instance.GetValue().Get<bool>();
+
+	if (AAShooter* shooter = Cast<AAShooter>(GetPawn()))
+	{
+		//shooter->GetProjectile()->
+	}
 }

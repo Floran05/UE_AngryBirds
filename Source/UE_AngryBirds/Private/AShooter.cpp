@@ -6,6 +6,8 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Components/StaticMeshComponent.h"
+#include "Components/SplineComponent.h"
+#include "NiagaraComponent.h"
 
 
 // Sets default values
@@ -25,6 +27,12 @@ AAShooter::AAShooter()
 
 	Projectile = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("SphereMesh"));
 	Projectile->SetupAttachment(Root);
+
+	ProjectilePath = CreateDefaultSubobject<USplineComponent>(TEXT("ProjectilePath"));
+	ProjectilePath->SetupAttachment(Projectile);
+
+	PathVisual = CreateDefaultSubobject<UNiagaraComponent>(TEXT("PathVisual"));
+	PathVisual->SetupAttachment(Root);
 }
 
 UStaticMeshComponent* AAShooter::GetProjectile() const
@@ -36,6 +44,16 @@ UStaticMeshComponent* AAShooter::GetProjectile() const
 void AAShooter::BeginPlay()
 {
 	Super::BeginPlay();
+
+}
+
+void AAShooter::ShowProjectilePath()
+{
+
+}
+
+void AAShooter::SetProjectileVelocity()
+{
 
 }
 
