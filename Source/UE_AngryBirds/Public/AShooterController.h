@@ -17,10 +17,13 @@ protected:
 	virtual void SetupInputComponent() override;
 
 	void Look(const FInputActionInstance& Instance);
+	void Shoot(const FInputActionInstance& Instance);
 
 	UPROPERTY(EditAnywhere, Category = "Input")
 	TSoftObjectPtr<UInputMappingContext> InputMapping;
 
 	UPROPERTY(EditAnywhere)
 	UInputAction* LookAction;
+	UPROPERTY(EditAnywhere)
+	UInputAction* ShootAction;
 };

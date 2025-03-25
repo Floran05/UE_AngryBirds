@@ -6,6 +6,9 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Components/StaticMeshComponent.h"
+#include "Components/SplineComponent.h"
+#include "NiagaraComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 
 // Sets default values
@@ -25,6 +28,15 @@ AAShooter::AAShooter()
 
 	Projectile = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("SphereMesh"));
 	Projectile->SetupAttachment(Root);
+
+	ProjectilePath = CreateDefaultSubobject<USplineComponent>(TEXT("ProjectilePath"));
+	ProjectilePath->SetupAttachment(Projectile);
+
+	PathVisual = CreateDefaultSubobject<UNiagaraComponent>(TEXT("PathVisual"));
+	PathVisual->SetupAttachment(ProjectilePath);
+
+	LaunchVelocity = 1000.0f;
+	ProjectileRadius = 10.0f;
 }
 
 UStaticMeshComponent* AAShooter::GetProjectile() const
@@ -43,6 +55,33 @@ void AAShooter::BeginPlay()
 void AAShooter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	//Compute Prediction
+	FPredictProjectilePathParams Params;
+	Params.StartLocation = Projectile->GetComponentToWorld().GetLocation();
+	Params.LaunchVelocity = Projectile->GetComponentToWorld().GetRotation().Vector() * LaunchVelocity;
+	Params.ProjectileRadius = ProjectileRadius;
+	FPredictProjectilePathResult Result;
+	bool bHit = UGameplayStatics::PredictProjectilePath(GetWorld(), Params, Result);
+
+	//Make Spline
+	TArray<FVector> PointsLocation;
+
+	for (auto PathPoint : Result.PathData)
+	{
+		PointsLocation.Add(PathPoint.Location);
+	}
+
+	ProjectilePath->SetSplinePoints(PointsLocation, ESplineCoordinateSpace::World);
+}
+
+void AAShooter::ShowProjectilePath()
+{
+
+}
+
+void AAShooter::SetProjectileVelocity()
+{
 
 }
 
